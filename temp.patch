@@ -1,0 +1,28 @@
+*** Begin Patch
+*** Update File: src/components/ui/3d-gallery-photography.tsx
+@@
+-  const textures = useGalleryTextures(normalizedImages);
+-  const preparedTextures = useMemo(() => {
+-    return textures.map((texture) => {
+-      texture.colorSpace = THREE.SRGBColorSpace;
+-      texture.needsUpdate = true;
+-      return texture;
+-    });
+-  }, [textures]);
++  const textures = useGalleryTextures(normalizedImages);
++  const preparedTextures = useMemo(() => {
++    if (!textures) return [] as THREE.Texture[];
++    return textures.map((texture) => {
++      texture.colorSpace = THREE.SRGBColorSpace;
++      texture.needsUpdate = true;
++      return texture;
++    });
++  }, [textures]);
+@@
+-  if (!textures || normalizedImages.length === 0) return (
+-    <FallbackGallery images={images} />
+-  );
++  if (!textures || normalizedImages.length === 0) {
++    return <FallbackGallery images={images} />;
++  }
+*** End Patch

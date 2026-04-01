@@ -1,0 +1,22 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+	<title>microsoft</title>
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="m0 0h200v200h-200z"/>
+		</clipPath>
+	</defs>
+	<style>
+		.s0 { fill: #f35325 } 
+		.s1 { fill: #81bc06 } 
+		.s2 { fill: #05a6f0 } 
+		.s3 { fill: #ffba08 } 
+	</style>
+	<g id="Clip-Path" clip-path="url(#cp1)">
+		<g>
+			<path class="s0" d="m8.7 8.7h87v87h-87z"/>
+			<path class="s1" d="m104.3 8.7h87v87h-87z"/>
+			<path class="s2" d="m8.7 104.3h87v87h-87z"/>
+			<path class="s3" d="m104.3 104.3h87v87h-87z"/>
+		</g>
+	</g>
+</svg>
