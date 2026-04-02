@@ -10,11 +10,11 @@ import {
   Suspense,
 } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { useTexture, Html } from "@react-three/drei";
 import * as THREE from "three";
 import Image from "next/image";
 
-type ImageItem = string | { src: string; alt?: string };
+type ImageItem = string | { src: string; alt?: string; characterName?: string; creatorName?: string };
 
 interface FadeSettings {
   fadeIn: {
@@ -152,14 +152,18 @@ function ImagePlane({
   position,
   scale,
   material,
+  itemData,
 }: {
   texture: THREE.Texture;
   position: [number, number, number];
   scale: [number, number, number];
   material: THREE.ShaderMaterial;
+  itemData?: { characterName?: string; creatorName?: string };
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [showLabel, setShowLabel] = useState(false);
+  const [labelKey, setLabelKey] = useState(0);
 
   useEffect(() => {
     if (material && texture) {
@@ -173,17 +177,42 @@ function ImagePlane({
     }
   }, [material, isHovered]);
 
+  useEffect(() => {
+    if (showLabel) {
+      const timer = setTimeout(() => setShowLabel(false), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [showLabel, labelKey]);
+
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    setShowLabel(true);
+    setLabelKey((prev) => prev + 1);
+  };
+
   return (
-    <mesh
-      ref={meshRef}
-      position={position}
-      scale={scale}
-      material={material as any}
-      onPointerEnter={() => setIsHovered(true)}
-      onPointerLeave={() => setIsHovered(false)}
-    >
-      <planeGeometry args={[1, 1, 32, 32]} />
-    </mesh>
+    <group position={position} scale={scale}>
+      <mesh
+        ref={meshRef}
+        material={material as any}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
+        onClick={handleClick}
+      >
+        <planeGeometry args={[1, 1, 32, 32]} />
+      </mesh>
+
+      {showLabel && itemData?.characterName && (
+        <Html position={[0, -0.6, 0.1]} center zIndexRange={[100, 0]}>
+          <div key={labelKey} className="pointer-events-none rounded-xl bg-black/60 backdrop-blur-md border border-white/10 px-4 py-2 text-center shadow-xl animate-float-label-fade-in-out">
+            <p className="text-white font-bold text-lg whitespace-nowrap">{itemData.characterName}</p>
+            {itemData.creatorName && (
+              <p className="text-gray-400 text-sm whitespace-nowrap mt-1">created by {itemData.creatorName}</p>
+            )}
+          </div>
+        </Html>
+      )}
+    </group>
   );
 }
 
@@ -466,6 +495,9 @@ function GalleryScene({
         const scale: [number, number, number] =
           aspect > 1 ? [2 * aspect, 2, 1] : [2, 2 / aspect, 1];
 
+        const originalItem = normalizedImages[plane.imageIndex];
+        const itemData = typeof originalItem === 'object' ? originalItem : undefined;
+
         return (
           <ImagePlane
             key={plane.index}
@@ -473,6 +505,7 @@ function GalleryScene({
             position={[plane.x, plane.y, worldZ]}
             scale={scale}
             material={material as any}
+            itemData={itemData}
           />
         );
       })}
