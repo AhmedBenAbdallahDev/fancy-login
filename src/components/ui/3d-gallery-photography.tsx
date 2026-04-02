@@ -178,7 +178,7 @@ function ImagePlane({
       ref={meshRef}
       position={position}
       scale={scale}
-      material={material}
+      material={material as any}
       onPointerEnter={() => setIsHovered(true)}
       onPointerLeave={() => setIsHovered(false)}
     >
@@ -221,7 +221,7 @@ function GalleryScene({
       ).map((img) => img.src),
     [normalizedImages],
   );
-  const textures = useTexture(textureSources) as THREE.Texture[];
+  const textures = useTexture(textureSources) as any;
   const preparedTextures = useMemo(() => {
     return textures.map((texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
@@ -472,7 +472,7 @@ function GalleryScene({
             texture={texture}
             position={[plane.x, plane.y, worldZ]}
             scale={scale}
-            material={material}
+            material={material as any}
           />
         );
       })}

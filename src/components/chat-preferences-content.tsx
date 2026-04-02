@@ -187,10 +187,21 @@ export function UserInstructionsContent() {
             </div>
           )}
           <div className="mt-2 p-3 rounded-md bg-muted/50 border border-border">
-            <p className="text-xs font-medium mb-1 text-muted-foreground uppercase tracking-widest">Preview</p>
+            <p className="text-xs font-medium mb-1 text-muted-foreground uppercase tracking-widest">
+              Preview
+            </p>
             <div className="text-sm">
-              <span style={{ opacity: preferences.roleplay?.narrationOpacity ?? 0.65 }}>*The bot sighs softly, looking at you.*</span>
-              <span className="ml-1">"I think this opacity looks just right, don't you?"</span>
+              <span
+                style={{
+                  opacity: preferences.roleplay?.narrationOpacity ?? 0.65,
+                }}
+              >
+                *The bot sighs softly, looking at you.*
+              </span>
+              <span className="ml-1">
+                &quot;I think this opacity looks just right, don&apos;t
+                you?&quot;
+              </span>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">
@@ -469,10 +480,21 @@ export function AiProviderConfigContent() {
             </span>
           </div>
           <div className="mt-2 p-3 rounded-md bg-muted/50 border border-border">
-            <p className="text-xs font-medium mb-1 text-muted-foreground uppercase tracking-widest">Preview</p>
+            <p className="text-xs font-medium mb-1 text-muted-foreground uppercase tracking-widest">
+              Preview
+            </p>
             <div className="text-sm">
-              <span style={{ opacity: preferences.roleplay?.narrationOpacity ?? 0.65 }}>*The bot sighs softly, looking at you.*</span>
-              <span className="ml-1">"I think this opacity looks just right, don't you?"</span>
+              <span
+                style={{
+                  opacity: preferences.roleplay?.narrationOpacity ?? 0.65,
+                }}
+              >
+                *The bot sighs softly, looking at you.*
+              </span>
+              <span className="ml-1">
+                &quot;I think this opacity looks just right, don&apos;t
+                you?&quot;
+              </span>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">
