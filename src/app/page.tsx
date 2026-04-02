@@ -5,13 +5,7 @@ import dynamic from "next/dynamic";
 import InfiniteGallery from "@/components/ui/3d-gallery-photography";
 import { Button } from "@/components/ui/button";
 import { Bug, X, PlugZap } from "lucide-react";
-import img20037 from "@/../public/characters/tex_support_card_20037.png";
-import img30041 from "@/../public/characters/tex_support_card_30041.png";
-import img30042 from "@/../public/characters/tex_support_card_30042.png";
-import img30044 from "@/../public/characters/tex_support_card_30044.png";
-import img30048 from "@/../public/characters/tex_support_card_30048.png";
-import img30062 from "@/../public/characters/tex_support_card_30062.png";
-import img30065 from "@/../public/characters/tex_support_card_30065.png";
+import { useEffect } from "react";
 
 const LightRays = dynamic(() => import("@/components/ui/light-rays"), {
   ssr: false,
@@ -21,18 +15,72 @@ const Particles = dynamic(() => import("@/components/ui/particles"), {
   ssr: false,
 });
 
-const sampleImages = [
-  { src: img20037.src, alt: "Character 20037" },
-  { src: img30041.src, alt: "Character 30041" },
-  { src: img30042.src, alt: "Character 30042" },
-  { src: img30044.src, alt: "Character 30044" },
-  { src: img30048.src, alt: "Character 30048" },
-  { src: img30062.src, alt: "Character 30062" },
-  { src: img30065.src, alt: "Character 30065" },
+const CHARACTER_NAMES = [
+  "Aria", "Zephyr", "Luna", "Kai", "Nova", "Orion", "Sage", "Raven",
+  "Phoenix", "Lyra", "Jasper", "Celeste", "Finn", "Aurora", "Silas",
+  "Elara", "Ronin", "Maya", "Dante", "Iris", "Kael", "Freya"
+];
+
+const CREATOR_NAMES = [
+  "@firekuma", "@shadowweaver", "@starlight", "@neon_ninja", "@pixel_pioneer",
+  "@cyber_samurai", "@dream_weaver", "@cosmic_creator", "@digital_druid", "@art_artisan",
+  "@mystic_maker", "@tech_titan", "@void_voyager", "@quantum_quill", "@nebula_nomad"
+];
+
+const attachmentFiles = [
+  "/attachments/127eb9ef4ca626e8584ac611f6b95c9b.jpg",
+  "/attachments/13315546fdc6006265b42a3bb6ccd2e4.jpg",
+  "/attachments/136640740_p0.jpg",
+  "/attachments/1aed29a72b8afd8efcfa920b3a509033.jpg",
+  "/attachments/1bdd40277f7c0dbb0b2bfa2b6f7c8f89.jpg",
+  "/attachments/20260129_231655.jpg",
+  "/attachments/20260129_231933.jpg",
+  "/attachments/22ef7f62d1c974a9731a5804602226de.jpg",
+  "/attachments/2833d5e0c78aabe1acb53217737df8cf9d96210360abff3c3cdfea834248625b.jpeg",
+  "/attachments/28da902f9daf6eec130157e4ce656112.jpg",
+  "/attachments/3ad30d33adffe413a3d3f95581033a78.jpg",
+  "/attachments/4c692f461f1a08f9c271177ed6923d5f.jpg",
+  "/attachments/6004eb792407b5b92f2a10a59bb7d5d9.jpg",
+  "/attachments/9k=_1772082096487.jpg",
+  "/attachments/Fix_hands_hold_202604020316.jpeg",
+  "/attachments/IMG_20260402_030816.jpg",
+  "/attachments/IMG_20260402_031702.jpg",
+  "/attachments/Z(1)_1772082096845.jpg",
+  "/attachments/c084a819078b2c14bb1701238ef0b5ab.jpg",
+  "/attachments/cbe163be8f39837cff59edda59d696b4.webp",
+  "/attachments/ced279c604303a9b3989352c5cf0178b.jpg",
+  "/attachments/hRdyOoZgA9a4JVpukBCif.webp"
 ];
 
 export default function SignInPage() {
   const [showSettings, setShowSettings] = useState(false);
+  const [galleryImages, setGalleryImages] = useState<{ src: string; alt?: string; characterName?: string; creatorName?: string }[]>([]);
+
+  useEffect(() => {
+    const generateRandomizedImages = () => {
+      const generated = attachmentFiles.map(src => {
+        const charName = CHARACTER_NAMES[Math.floor(Math.random() * CHARACTER_NAMES.length)];
+        const creatorName = CREATOR_NAMES[Math.floor(Math.random() * CREATOR_NAMES.length)];
+        return {
+          src,
+          alt: `Character ${charName}`,
+          characterName: charName,
+          creatorName: creatorName
+        };
+      });
+
+      // Shuffle the array
+      for (let i = generated.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [generated[i], generated[j]] = [generated[j], generated[i]];
+      }
+
+      setGalleryImages(generated);
+    };
+
+    generateRandomizedImages();
+  }, []);
+
 
   // Effect settings
   const [lightSpread, setLightSpread] = useState(1.2);
@@ -71,7 +119,7 @@ export default function SignInPage() {
       </div>
 
       <InfiniteGallery
-        images={sampleImages}
+        images={galleryImages}
         speed={1.2}
         zSpacing={3}
         visibleCount={12}
