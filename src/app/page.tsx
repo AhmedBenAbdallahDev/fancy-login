@@ -5,8 +5,6 @@ import dynamic from "next/dynamic";
 import InfiniteGallery from "@/components/ui/3d-gallery-photography";
 import { Button } from "@/components/ui/button";
 import { Bug, X, PlugZap } from "lucide-react";
-import { AuthModal } from "@/components/auth/auth-modal";
-import { OfflineLoginDialog } from "@/components/auth/offline-login-dialog";
 import img20037 from "@/../public/characters/tex_support_card_20037.png";
 import img30041 from "@/../public/characters/tex_support_card_30041.png";
 import img30042 from "@/../public/characters/tex_support_card_30042.png";
@@ -87,29 +85,20 @@ export default function SignInPage() {
             <span className="italic">I create;</span> therefore I am
           </h1>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <AuthModal
-              trigger={
-                <Button
-                  size="lg"
-                  className="h-14 min-w-[220px] gap-2 rounded-full bg-white text-black hover:bg-white/90"
-                >
-                  Join Now
-                </Button>
-              }
-              defaultTab="signup"
-            />
-            <OfflineLoginDialog
-              trigger={
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="h-14 min-w-[220px] gap-2 rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
-                >
-                  <PlugZap className="size-5" />
-                  Use Local Account
-                </Button>
-              }
-            />
+            <Button
+              size="lg"
+              className="h-14 min-w-[220px] gap-2 rounded-full bg-white text-black hover:bg-white/90"
+            >
+              Join Now
+            </Button>
+            <Button
+              size="lg"
+              variant="secondary"
+              className="h-14 min-w-[220px] gap-2 rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
+            >
+              <PlugZap className="size-5" />
+              Use Local Account
+            </Button>
           </div>
         </div>
       </div>
